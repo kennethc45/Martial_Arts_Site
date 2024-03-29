@@ -1,0 +1,1 @@
+/Users/kennethcadungog/technique-library/technique_library/target/debug/technique_library: /Users/kennethcadungog/technique-library/technique_library/src/lib.rs /Users/kennethcadungog/technique-library/technique_library/src/main.rs
