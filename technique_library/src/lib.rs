@@ -2,6 +2,7 @@ pub mod technique_catalog {
     use::std::collections::HashMap;
 
     #[derive(Debug)]
+    #[derive(Clone)]
     pub enum TechniqueCategory {
         Strike(StrikeCategory),
         Submission(SubmissionCategory),
@@ -11,6 +12,7 @@ pub mod technique_catalog {
     }
 
     #[derive(Debug)]
+    #[derive(Clone)]
     pub enum StrikeCategory {
         Punch,
         Kick,
@@ -19,6 +21,7 @@ pub mod technique_catalog {
     }
 
     #[derive(Debug)]
+    #[derive(Clone)]
     pub enum SubmissionCategory {
         JointLock,
         ChokeOrStrangle,
@@ -26,12 +29,14 @@ pub mod technique_catalog {
     }
 
     #[derive(Debug)]
+    #[derive(Clone)]
     pub enum EvasionCategory {
         Headmovement,
         Evasion 
     }
 
     #[derive(Debug)]
+    #[derive(Clone)]
     pub enum TakedownCategory {
         Takedown,
         Sweep,
@@ -39,9 +44,9 @@ pub mod technique_catalog {
     }
 
 
-
+    #[derive(Clone)]
     pub struct Technique {
-        name: String,
+        pub name: String,
         category: TechniqueCategory,
         description: String 
     }
@@ -67,8 +72,39 @@ pub mod technique_catalog {
     }
 
     impl TechniqueLibrary {
+        pub fn new() -> Self {
+            TechniqueLibrary {
+                techniques: HashMap::new(),
+            }
+        }
+
         pub fn add_technique(&mut self, name: String, technique: Technique) {
             self.techniques.insert(name, technique);
+        }
+
+        pub fn get_technique(&self, name: &str) -> Result<&Technique, String> {
+            match self.techniques.get(name) {
+                Some(technique) => Ok(technique),
+                None => Err(format!("Technique with name '{}' not found", name)),
+            }
+        }
+
+        pub fn update_technqique(&mut self, name: &str, updated_technique: Technique) -> bool {
+            if self.techniques.contains_key(name) {
+                self.techniques.insert(name.to_string(), updated_technique);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        pub fn delete_technique(&mut self, name: &str) -> bool {
+            if self.techniques.contains_key(name) {
+                self.techniques.remove(name);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
