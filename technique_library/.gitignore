@@ -11,6 +11,7 @@
 **/*.lock
 
 # Ignore editor-specific files and directories
+../.vscode/
 .vscode/
 .idea/
 *.sublime-*
