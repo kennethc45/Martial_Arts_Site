@@ -1,8 +1,7 @@
 pub mod technique_catalog {
     use::std::collections::HashMap;
 
-    #[derive(Debug)]
-    #[derive(Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub enum TechniqueCategory {
         Strike(StrikeCategory),
         Submission(SubmissionCategory),
@@ -11,8 +10,7 @@ pub mod technique_catalog {
         Defense
     }
 
-    #[derive(Debug)]
-    #[derive(Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub enum StrikeCategory {
         Punch,
         Kick,
@@ -20,31 +18,27 @@ pub mod technique_catalog {
         Elbow
     }
 
-    #[derive(Debug)]
-    #[derive(Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub enum SubmissionCategory {
         JointLock,
         ChokeOrStrangle,
         Pin
     }
 
-    #[derive(Debug)]
-    #[derive(Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub enum EvasionCategory {
         Headmovement,
         Evasion 
     }
 
-    #[derive(Debug)]
-    #[derive(Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub enum TakedownCategory {
         Takedown,
         Sweep,
         Thow
     }
 
-
-    #[derive(Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct Technique {
         pub name: String,
         category: TechniqueCategory,
@@ -89,7 +83,7 @@ pub mod technique_catalog {
             }
         }
 
-        pub fn update_technqique(&mut self, name: &str, updated_technique: Technique) -> bool {
+        pub fn update_technique(&mut self, name: &str, updated_technique: Technique) -> bool {
             if self.techniques.contains_key(name) {
                 self.techniques.insert(name.to_string(), updated_technique);
                 return true;
