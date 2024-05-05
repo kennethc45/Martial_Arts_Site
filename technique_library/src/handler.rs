@@ -1,9 +1,14 @@
+mod insert_ma;
+
 use std::sync::Arc;
+use minijinja::render;
+
+use insert_ma::entry_page;
 
 use axum::{
     extract::{Path, Query, State},
     http::StatusCode,
-    response::IntoResponse,
+    response::{Html, IntoResponse},
     Json,
 };
 use serde_json::json;
@@ -23,6 +28,10 @@ pub async fn health_check_handler() -> impl IntoResponse {
     });
 
     Json(json_response)
+}
+
+pub async fn entry_page_handler() -> impl IntoResponse {
+    Html(render!(entry_page()))
 }
 
 pub async fn ma_list_handler(
@@ -51,12 +60,12 @@ pub async fn ma_list_handler(
         return Err((StatusCode::INTERNAL_SERVER_ERROR,Json(error_response)))
     }
 
-    let martialArts = query_result.unwrap();
+    let martial_arts = query_result.unwrap();
 
     let json_response = serde_json::json!({
         "status": "success",
-        "results": martialArts.len(),
-        "martial_arts": martialArts
+        "results": martial_arts.len(),
+        "martial_arts": martial_arts
     });
     Ok(Json(json_response))
 }

@@ -7,8 +7,7 @@ use axum::{
 
 use crate::{
     handler::{
-        create_ma_handler, delete_ma_handler, edit_ma_handler,
-        get_ma_handler, health_check_handler, ma_list_handler,
+        create_ma_handler, delete_ma_handler, edit_ma_handler, entry_page_handler, get_ma_handler, health_check_handler, ma_list_handler
     },
     AppState,
 };
@@ -16,8 +15,8 @@ use crate::{
 pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
     .route("/", get(|| async { "Martial Arts Site" }))
+    .route("/entry_page", get(entry_page_handler))
     .route("/api/healthchecker", get(health_check_handler))
-    .route("/api/martial_arts/", post(create_ma_handler))
     .route("/api/martial_arts", get(ma_list_handler))
     .route(
         "/api/martial_arts/:id",
@@ -25,5 +24,6 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
             .patch(edit_ma_handler)
             .delete(delete_ma_handler)
     )
+    .route("/api/martial_arts/", post(create_ma_handler))
     .with_state(app_state)
 }

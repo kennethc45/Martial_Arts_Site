@@ -1,4 +1,3 @@
-// use technique_library::technique_catalog::*;
 mod handler;
 mod model;
 mod route;
@@ -10,16 +9,12 @@ use axum::http::{
     header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
     HeaderValue, Method,
 };
-use axum::response::{IntoResponse, Html};
-use axum::Json;
-use axum::{routing::{get, post}, Router, extract::{State, Path}};
+
 use dotenv::dotenv;
 use route::create_router;
 use tower_http::cors::CorsLayer;
 
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
-
-use serde::{Deserialize, Serialize};
 use tokio::net::TcpListener;
 
 pub struct AppState {
@@ -63,7 +58,7 @@ async fn main() {
 
     println!("Listening on {}", listener.local_addr().unwrap());
 
-    let app_state = Arc::new(AppState { db: pool.clone() });
+    let _app_state = Arc::new(AppState { db: pool.clone() });
 
     // Defined endpoints 
     let app = create_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
